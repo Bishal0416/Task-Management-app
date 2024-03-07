@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Mail;
 use App\Models\Task;
 use App\Models\Chat;
 use App\Models\Task_catagory;
 use App\Models\User;
+use App\Mail\TaskMail;
 
 
 use Illuminate\Http\Request;
@@ -43,6 +45,14 @@ class TaskController extends Controller
         // $task->catagory=$req->input('catagory');
         $task->assign_to=implode(',',$assigne);
         $task->save();
+
+        foreach($assigne as $assign){
+            $assignUserName = User::where('name', $assign)->get();
+            // dd($assignUserName[0]->email);
+            Mail::to($assignUserName[0]->email)->send(new TaskMail($task, $assignUserName[0]));
+        }
+
+
         return redirect('/dashboard');
     }
 
@@ -70,7 +80,6 @@ class TaskController extends Controller
         $temp = $req->all();
         $catagory = $temp['catagory'];
         $assigne = $temp['assign'];
-        // $task = new Task();
         $task = Task::where('id', $task_id)->first();
         if(!is_null($req->file('task_file'))){
             $imagePath = $req->file('task_file')->store('images', 'public');
@@ -88,6 +97,11 @@ class TaskController extends Controller
         // $task->catagory=$req->input('catagory');
         $task->assign_to=implode(',',$assigne);
         $task->save();
+        foreach($assigne as $assign){
+            $assignUserName = User::where('name', $assign)->get();
+            // dd($assignUserName[0]->email);
+            Mail::to($assignUserName[0]->email)->send(new TaskMail($task, $assignUserName[0]));
+        }
         return redirect('/dashboard');
     }
 

@@ -6,6 +6,7 @@
                     {{ __("You're logged in!") }}
                 </div>
             </div> -->
+
     <div class="flex flex-row">
         <!-- Component Start -->
         <div
@@ -60,20 +61,20 @@
             <div>
                 <form action="{{ route('task.filter-search') }}" method="GET">
                     <input type="text" name="keyword" placeholder="Search title and Description">
-                    <button type="submit">Search</button>
+                    <!-- <button type="submit">Search</button>
                 </form>
-                <form action="">
+                <form action=""> -->
                     <div>
                         <span>Filter by:</span>
                             <select name="catagory">
-                                <option>Catagory</option>
+                                <option value="">Catagory</option>
                                 @foreach($catagories as $catagory)
                                 <option>{{ $catagory->catagory_name }}</option>
                                 @endforeach
                             </select>
                         
                             <select name="status">
-                                <option>status</option>
+                                <option  value="">status</option>
                                 <option>Pending</option>
                                 <option>In_progress</option>
                                 <option>Completed</option>

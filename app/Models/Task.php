@@ -20,4 +20,10 @@ class Task extends Model
     ];
     protected $table = "tasks";
     protected $primaryKey = "id";
+
+
+    public function assignedUsers()
+    {
+        return $this->belongsToMany(User::class, 'task_user')->withTimestamps();
+    }
 }

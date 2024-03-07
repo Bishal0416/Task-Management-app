@@ -22,7 +22,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'everyControll'])->middleware(['auth', 'verified'])->name('dashboard');
-
+Route::get('/send/mail', [DashboardController::class, 'mail'])->name('mail');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

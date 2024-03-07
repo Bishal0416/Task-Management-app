@@ -42,7 +42,7 @@
 
 <!-- send commant -->
 @foreach($assigne as $assign)
-@if(Auth::user()->name == $assign || Auth::user()->role == 'Admin' )
+    @if(Auth::user()->name == $assign || Auth::user()->role == 'Admin' )
         <div class="sticky bottom-0 z-50">
             <form action="{{ route('chat.send', ['task_id'=> $task_details->id]) }}">
                 <label for="chat" class="sr-only">Your message</label>
@@ -71,7 +71,8 @@
                 </div>
             </form>
         </div>
-        @endif
-        @endforeach
+        @break
+    @endif
+@endforeach
     </div>  
 </x-app-layout>
