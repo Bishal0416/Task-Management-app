@@ -9,8 +9,7 @@
 
     <div class="flex flex-row">
         <!-- Component Start -->
-        <div
-            class="flex flex-col items-center w-60 overflow-hidden text-gray-400 bg-gray-900 border-r h-screen">
+        <div class="flex flex-col items-center w-60 overflow-hidden text-gray-400 bg-gray-900 border-r h-screen">
             <div class="w-full px-2">
                 <div class="flex flex-col items-center w-full mt-3  border-gray-700">
                     <a class="flex items-center justify-center w-full h-16 mt-auto bg-gray-800 hover:bg-gray-700 hover:text-gray-300"
@@ -31,15 +30,17 @@
                         </svg>
                         <span class="ml-2 text-sm font-medium">Dasboard</span>
                     </a>
+                    @if(Auth::user()->role == 'Admin')
                     <a class="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-700 hover:text-gray-300"
-                        href="#">
+                        href="{{ route('category') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-current" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0-8 0M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
+                                d="M7.885 10.23L12 3.463l4.115 6.769zm9.615 11q-1.567 0-2.65-1.08q-1.08-1.083-1.08-2.65t1.08-2.649q1.083-1.082 2.65-1.082t2.65 1.082q1.08 1.082 1.08 2.649t-1.081 2.65q-1.082 1.08-2.649 1.08m-13.73-.5v-6.46h6.46v6.46zm13.73-.5q1.146 0 1.938-.791q.793-.792.793-1.938q0-1.147-.792-1.94q-.792-.792-1.938-.792q-1.147 0-1.94.792q-.792.792-.792 1.938q0 1.147.792 1.94q.792.792 1.938.792m-12.73-.5h4.462v-4.462H4.769zm4.858-10.5h4.746L12 5.427zM17.5 17.5" />
                         </svg>
-                        <span class="ml-2 text-sm font-medium">Users</span>
+                        <span class="ml-2 text-sm font-medium">Manage Category</span>
                     </a>
+                    @endif
                     <a class="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-700 hover:text-gray-300"
                         href={{route('task.create')}}>
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-current" fill="none"
@@ -66,21 +67,21 @@
                 <form action=""> -->
                     <div>
                         <span>Filter by:</span>
-                            <select name="catagory">
-                                <option value="">Catagory</option>
-                                @foreach($catagories as $catagory)
-                                <option>{{ $catagory->catagory_name }}</option>
-                                @endforeach
-                            </select>
-                        
-                            <select name="status">
-                                <option  value="">status</option>
-                                <option>Pending</option>
-                                <option>In_progress</option>
-                                <option>Completed</option>
-                            </select>
-                            <input type="date" name="due_data">
-                            <button type="submit">filter</button>
+                        <select name="catagory">
+                            <option value="">Category</option>
+                            @foreach($catagories as $catagory)
+                            <option>{{ $catagory->catagory_name }}</option>
+                            @endforeach
+                        </select>
+
+                        <select name="status">
+                            <option value="">status</option>
+                            <option>Pending</option>
+                            <option>In_progress</option>
+                            <option>Completed</option>
+                        </select>
+                        <input type="date" name="due_data">
+                        <button type="submit">filter</button>
                     </div>
                 </form>
 
@@ -99,18 +100,20 @@
             <!-- Task section -->
             <div class="flex flex-row flex-wrap">
                 @foreach($allTasks as $task)
-                <div class="m-1 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div
+                    class="m-1 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <div class="flex flex-row">
                         <svg class="w-7 h-7 text-gray-500 dark:text-gray-400 mb-3" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                            d="M8.5 2a1.5 1.5 0 0 0-1.415 1H5.5A1.5 1.5 0 0 0 4 4.5v12A1.5 1.5 0 0 0 5.5 18h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 14.5 3h-1.585A1.5 1.5 0 0 0 11.5 2zM8 3.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m4.854 6.354l-3.5 3.5a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L9 12.293l3.146-3.147a.5.5 0 0 1 .708.708" />
+                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M8.5 2a1.5 1.5 0 0 0-1.415 1H5.5A1.5 1.5 0 0 0 4 4.5v12A1.5 1.5 0 0 0 5.5 18h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 14.5 3h-1.585A1.5 1.5 0 0 0 11.5 2zM8 3.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m4.854 6.354l-3.5 3.5a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L9 12.293l3.146-3.147a.5.5 0 0 1 .708.708" />
                         </svg>
-                        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ $task->title }}</h5>
+                        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">{{
+                            $task->title }}</h5>
                     </div>
                     <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Created by: {{ $task->user_id}}</p>
                     <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Progress:{{ $task->status}}</p>
-                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">catagories:{{ $task->catagory }}</p>
+                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">categories:{{ $task->catagory }}</p>
                     <a href="{{ route('task.show', ['task_id'=> $task->id]) }}"
                         class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         Read more

@@ -1,0 +1,1 @@
+<embed class="h-screen" src="{{ asset('storage/'.$task->attach_file) }}" type="application/pdf" width="100%" height="100%">

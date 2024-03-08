@@ -23,15 +23,20 @@ class TaskController extends Controller
         $validated = $req->validate([
             'task_title' => 'required',
             'desc' => 'required',
-            'attach_file' => 'max:5120|nullable',
+            'due_date'=>'required',
+            'status'=>'required',
+            // 'catagory[]'=>'required',
+            // 'assign[]'=>'required',
+            'task_file' => 'max:5120|nullable',
         ]);    
         $temp = $req->all();
+        // dd($temp);
         $catagory = $temp['catagory'];
         $assigne = $temp['assign'];
         $task = new Task();
         if(!is_null($req->file('task_file'))){
-            $imagePath = $req->file('task_file')->store('images', 'public');
-            $task->attach_file = $imagePath;
+            $taskPath = $req->file('task_file')->store('doc', 'public');
+            $task->attach_file = $taskPath;
         }
         else{
             $task->attach_file =null;
@@ -71,23 +76,20 @@ class TaskController extends Controller
         return view('tasks.updatetask', ['current_task' => $current_task,'catagories'=>$catagories, 'user_name'=>$user_name]);
     }
 
-    public function update(Request $req, $task_id){
-        $validated = $req->validate([
-            'task_title' => 'required',
-            'desc' => 'required',
-            'attach_file' => 'max:5120|nullable',
-        ]);    
+    public function update(Request $req, $task_id){  
         $temp = $req->all();
         $catagory = $temp['catagory'];
         $assigne = $temp['assign'];
         $task = Task::where('id', $task_id)->first();
         if(!is_null($req->file('task_file'))){
-            $imagePath = $req->file('task_file')->store('images', 'public');
-            $task->attach_file = $imagePath;
+            $taskPath = $req->file('task_file')->store('doc', 'public');
+            $task->attach_file = $taskPath;
         }
         else{
+
             $task->attach_file =null;
         }
+
         $task->user_id=auth()->user()->id;
         $task->title=$req->input('task_title');
         $task->description=$req->input('desc');

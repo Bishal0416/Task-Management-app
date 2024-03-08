@@ -1,29 +1,49 @@
-
 <x-app-layout>
 
     <!-- dispaly all details task -->
     <div class="flex flex-col h-screen">
         <div class="sticky top-0 z-50 border-b-2">
             <div class='text-white'>
-                <p>ID:</p>{{$task_details->id}}
-                <p>User_id how initilize tas:</p>{{$task_details->user_id}}
+                <p>TITLE:</p>{{$task_details->title}}
+                <p>User_id how initilize task:</p>{{$task_details->user_id}}
                 <br>
-                <p>Catagory:</p>{{$task_details->catagory}}
+                <p>Description:</p>{{$task_details->description}}
+                <p>Category:</p>{{$task_details->catagory}}
                 <p>Current status:</p>{{$task_details->status}}
                 <br>
                 <p>Assign to:</p>{{$task_details->assign_to}}
+                <p>Uploaded docs:</p>
+                @if(is_null($task_details->attach_file))
+                <p>No! file attach with This task</p>
+                @else
+                <a href="{{ route('doc', ['task_id'=>$task_details->id]) }}">
+                    <svg class="w-10 h-10 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2
+                        2 0 0 0 2-2V8l-6-6z" />
+                    </svg>
+                </a>
+                <a href="{{ route('doc-download', ['task_id'=>$task_details->id]) }}">Download</a>
+                @endif
             </div>
-            <a href="{{ route('task.edit', ['task_id'=> $task_details->id]) }}"><button type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">UPDATE</button></a>
+            @foreach($assigne as $assign)
+            @if(Auth::user()->name == $assign || Auth::user()->role == 'Admin' || Auth::user()->id == $task_details->user_id)
+            <a href="{{ route('task.edit', ['task_id'=> $task_details->id]) }}"><button type="button"
+                    class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">UPDATE</button></a>
 
-            <a href="{{ route('task.delete', ['task_id'=> $task_details->id]) }}"><button type="button" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">DELETE</button></a>
+            <a href="{{ route('task.delete', ['task_id'=> $task_details->id]) }}"><button type="button"
+                    class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">DELETE</button></a>
+            @break
+            @endif
+            @endforeach
         </div>
 
 
 
 
 
-<!-- show commant -->
-@auth
+        <!-- show commant -->
+        @auth
         <div class="grow m-2 overflow-y-scroll">
             @foreach($chats as $chat)
             @if(Auth::user()->id == $chat->user_id)
@@ -37,12 +57,12 @@
             @endif
             @endforeach
         </div>
-@endauth
-<!-- end shoe commaents -->
+        @endauth
+        <!-- end shoe commaents -->
 
-<!-- send commant -->
-@foreach($assigne as $assign)
-    @if(Auth::user()->name == $assign || Auth::user()->role == 'Admin' )
+        <!-- send commant -->
+        @foreach($assigne as $assign)
+        @if(Auth::user()->name == $assign || Auth::user()->role == 'Admin' || Auth::user()->id == $task_details->user_id)
         <div class="sticky bottom-0 z-50">
             <form action="{{ route('chat.send', ['task_id'=> $task_details->id]) }}">
                 <label for="chat" class="sr-only">Your message</label>
@@ -72,7 +92,7 @@
             </form>
         </div>
         @break
-    @endif
-@endforeach
-    </div>  
+        @endif
+        @endforeach
+    </div>
 </x-app-layout>

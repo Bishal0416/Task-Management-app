@@ -61,7 +61,7 @@
                         <input name="task_title" type="text" id="task_title"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     </div>
-                    <x-input-error class="mt-2" :messages="$errors->get('title')" />
+                    <x-input-error class="mt-2" :messages="$errors->get('task_title')" />
                 </div>
                 <!-- task description -->
                 <div class='m-2'>
@@ -108,7 +108,7 @@
                 </div>
                 <!-- catagories -->
                 <div class="m-2">
-                    <label for="catagory[]" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Catagories</label>
+                    <label for="catagory[]" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Categories</label>
                     <select id="catagory[]" multiple="multiple" name="catagory[]"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <!-- <option>Web Devopment</option>

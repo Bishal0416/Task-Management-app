@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,12 +23,20 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'everyControll'])->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/send/mail', [DashboardController::class, 'mail'])->name('mail');
+Route::get('/send/mail', [DashboardController::class, 'mail'])->middleware(['auth', 'verified'])->name('mail');
+Route::get('/doc/show/{task_id}', [DashboardController::class, 'docShow'])->middleware(['auth', 'verified'])->name('doc');
+Route::get('/doc/download/{task_id}', [DashboardController::class, 'docDownload'])->middleware(['auth', 'verified'])->name('doc-download');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/category', [CategoryController::class, 'main'])->name('category');
+    Route::post('/category/demo', [CategoryController::class, 'add'])->name('category.demo');
+    Route::get('/category/delete/{id}', [CategoryController::class, 'delete'])->name('category.delete');
 });
 
 Route::middleware('auth')->group(function () {

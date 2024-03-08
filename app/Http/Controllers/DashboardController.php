@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+
 
 
 use Illuminate\Http\Request;
@@ -56,24 +58,22 @@ class DashboardController extends Controller
                 }
             }
         }
-        // dd($stArr);
-
-
-
-        // $query = Task::query();
-        // if($catagory){
-        //     $query = Task::where('catagory', $catagory);
-        // }
-        // if($status){
-        //     $query = Task::where('status', $status);
-        // }
-        // // else{
-        // //     $tasks = Task::all();
-        // // }
-        // $tasks=$query->get();
-        
         return view('dashboard', ['allTasks'=> $stArr,'catagories'=>$catagories]);
+    
     }
 
+    public function docShow($id){
+        $task = Task::find($id);
+        return view('docShow', ['task'=>$task]);
+    }
+
+    public function docDownload($id){
+        $task = Task::find($id);
+        // $file =  asset('storage/'.$task->attach_file);
+        $fileName='larael'.time();
+        $file = $task->attach_file;
+        $filePath = storage_path('app/public/'.$file);
+        return response()->download($filePath);
+    }
 
 }
