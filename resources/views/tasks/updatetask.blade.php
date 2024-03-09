@@ -5,7 +5,7 @@
 
         <!-- Component Start -->
         <div
-            class="flex flex-col items-center w-60 overflow-hidden text-gray-400 bg-gray-900 rounded border-r h-screen">
+            class="flex flex-col items-center w-60 overflow-hidden text-gray-400 bg-gray-900 ">
             <div class="w-full px-2">
                 <div class="flex flex-col items-center w-full mt-3  border-gray-700">
                     <a class="flex items-center justify-center w-full h-16 mt-auto bg-gray-800 hover:bg-gray-700 hover:text-gray-300"
@@ -49,7 +49,7 @@
         </div>
         <!-- Component End  -->
 
-        <div class="flex flex-col">
+        <div class="flex w-full flex-col border-l-2">
             <h1 class='text-slate-200 text-3xl text-center'>Update Task</h1>
             <form action="{{ route('task.update',['task_id'=> $current_task->id]) }}" method="POST" class="m-2" enctype="multipart/form-data">
                 @csrf

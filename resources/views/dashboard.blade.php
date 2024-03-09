@@ -1,7 +1,8 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script>
 <x-app-layout>
     <!-- <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8"> -->
-    <!-- <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("You're logged in!") }}
                 </div>
@@ -9,7 +10,7 @@
 
     <div class="flex flex-row">
         <!-- Component Start -->
-        <div class="flex flex-col items-center w-60 overflow-hidden text-gray-400 bg-gray-900 border-r h-screen">
+        <div class="flex flex-col items-center w-60 text-gray-400 bg-gray-900 min-w-56 ">
             <div class="w-full px-2">
                 <div class="flex flex-col items-center w-full mt-3  border-gray-700">
                     <a class="flex items-center justify-center w-full h-16 mt-auto bg-gray-800 hover:bg-gray-700 hover:text-gray-300"
@@ -57,51 +58,70 @@
 
 
 
-        <div class="flex flex-col m-2">
+        <div class="h-full border-r flex flex-col m-2 border-l-2 pl-2">
             <!-- Search Filter section -->
-            <div>
-                <form action="{{ route('task.filter-search') }}" method="GET">
-                    <input type="text" name="keyword" placeholder="Search title and Description">
-                    <!-- <button type="submit">Search</button>
-                </form>
-                <form action=""> -->
-                    <div>
-                        <span>Filter by:</span>
-                        <select name="catagory">
-                            <option value="">Category</option>
-                            @foreach($catagories as $catagory)
-                            <option>{{ $catagory->catagory_name }}</option>
-                            @endforeach
-                        </select>
-
-                        <select name="status">
-                            <option value="">status</option>
-                            <option>Pending</option>
-                            <option>In_progress</option>
-                            <option>Completed</option>
-                        </select>
-                        <input type="date" name="due_data">
-                        <button type="submit">filter</button>
+            <div class="w-full bg-gray-900 pb-5 mb-3 border-gray-500 sticky top-0 z-20 border-b-2">
+                <form class=" mx-auto" action="{{ route('task.filter-search') }}" method="GET">
+                    <!-- search box -->
+                    <div class="relative min-w-max ">
+                        <div class="pb-6 absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                            </svg>
+                        </div>
+                        <input
+                            class="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            type="text" name="keyword" placeholder="Search title and Description"> <br>
                     </div>
+                    <!-- filter section -->
+                    <div>
+                        <div class="grid gap-3 sm:grid-cols-12">
+                            <!-- catagory -->
+                            <div class="sm:col-span-3">
+                                <label for="catagory" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Filter by Category</label>
+                                <select name="catagory" id="catagory"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option value="" selected>Category</option>
+                                    @foreach($catagories as $catagory)
+                                    <option>{{$catagory->catagory_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <!-- status -->
+                            <div class="sm:col-span-3">
+                                <label for="status" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Filter by Status</label>
+                                <select name="status" id="status"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option value="" selected>status</option>
+                                    <option>Pending</option>
+                                    <option>In_progress</option>
+                                    <option>Completed</option>
+                                </select>
+                            </div>
+                            <!-- due date -->
+                            <div class="relative max-w-sm sm:col-span-3">
+                                <label for="to" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select start date</label>
+                                <input type="date" name="due_data" id="to"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            </div>
+                            <div class="sm:col-span-3 w-full">
+                                <label for="from" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select end date</label>
+                                <input type="date" name="due_data" id="from"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="mt-5 text-white bg-[#FF9119] hover:bg-[#FF9119]/80 focus:ring-4 focus:outline-none focus:ring-[#FF9119]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-[#FF9119]/80 dark:focus:ring-[#FF9119]/40 me-2 mb-2">Filter And Search</button>
                 </form>
-
-
-
-
-
-
-
-
-
-
-
             </div>
 
             <!-- Task section -->
-            <div class="flex flex-row flex-wrap">
+            <div class="grid gap-3 sm:grid-cols-12">
                 @foreach($allTasks as $task)
                 <div
-                    class="m-1 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                    class="sm:col-span-3 m-1 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <div class="flex flex-row">
                         <svg class="w-7 h-7 text-gray-500 dark:text-gray-400 mb-3" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -128,6 +148,10 @@
             </div>
 
         </div>
+
+
+
+
     </div>
 
 
