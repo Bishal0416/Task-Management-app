@@ -54,7 +54,8 @@
                 <div class="text-gray-200">
                     <h1 class="flex justify-center text-gray-200 text-2xl items-center">#id {{$task_details->id}} TITLE:
                         {{$task_details->title}} </h1>
-                    <p class="">Task Creator: {{$task_details->user_id}}</p>
+                        <p>Description: {{$task_details->description}}</p>
+                    <p class="">Task Creator: {{$user_name[0]->name}}</p>
                     <p>Assign to: {{$task_details->assign_to}}</p>
                     <p>Current status: {{$task_details->status}}</p>
                     <p class="">Category: {{$task_details->catagory}}</p>
@@ -95,11 +96,25 @@
                 @foreach($chats as $chat)
                 @if(Auth::user()->id == $chat->user_id)
                 <div class="flex justify-end">
-                    <div class="bg-blue-500 text-white rounded-lg p-3 mb-2 max-w-xs text-wrap">{{$chat->message}}</div>
+                    <div class="bg-blue-500 text-white rounded-lg p-3 mb-2 max-w-xs text-wrap">
+                        <div>
+                            <div class="text-sm text-slate-950">
+                                {{$chat->user_name}} :
+                                {{$chat->created_at->diffForHumans()}}
+                            </div>
+                        {{$chat->message}}
+                        </div>
+                    </div>
                 </div>
                 @else
                 <div class="flex justify-start">
-                    <div class="bg-gray-300 text-gray-700 rounded-lg p-3 mb-2 max-w-xs text-wrap">{{$chat->message}}</div>
+                    <div class="bg-gray-300 text-gray-700 rounded-lg p-3 mb-2 max-w-xs text-wrap">
+                    <div class="text-sm text-slate-950">
+                                {{$chat->user_name}} :
+                                {{$chat->created_at->diffForHumans()}}
+                            </div>
+                        {{$chat->message}}
+                    </div>
                 </div>
                 @endif
                 @endforeach

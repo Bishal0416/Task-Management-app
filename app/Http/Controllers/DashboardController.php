@@ -12,6 +12,10 @@ use App\Mail\TaskMail;
 use App\Models\Task;
 use App\Models\User;
 use App\Models\Task_catagory;
+use Carbon\Carbon;
+use DateTime;
+
+
 
 class DashboardController extends Controller
 {
@@ -22,11 +26,9 @@ class DashboardController extends Controller
         $search = $req->keyword ?? "";
         $catagory = $req->catagory ?? "";
         $status = $req->status ?? "";
-        // if($search != ""){
-        //     $tasks = Task::where('title', 'like', "%$search%")->orwhere('description', 'like', "%$search%")->get();
-        // }
+        $due_date_start = $req->due_date_start ?? "";
+        $due_date_end = $req->due_date_end ?? "";
         $keyTasks = [];
-        // $search == "" ? $keyTasks = $tasks:{};
         if($search == ""){
             $keyTasks = $tasks;
         }
@@ -58,7 +60,22 @@ class DashboardController extends Controller
                 }
             }
         }
-        return view('dashboard', ['allTasks'=> $stArr,'catagories'=>$catagories]);
+        $dateArr=[];
+        if(($due_date_start == "") and ($due_date_end == "" )){
+            $dateArr= $stArr;
+        }
+        else{
+            $startDateTime = new DateTime($due_date_start);
+            $endDateTime = new DateTime($due_date_end);
+            foreach($stArr as $t){
+                $checkDateTime = new DateTime($t->due_date);
+                if ($checkDateTime >= $startDateTime && $checkDateTime <= $endDateTime) {
+                    array_push($dateArr, $t);
+                }
+            }
+        }
+
+        return view('dashboard', ['allTasks'=> $dateArr,'catagories'=>$catagories]);
     
     }
 

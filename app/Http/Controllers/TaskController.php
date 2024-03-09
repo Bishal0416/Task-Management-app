@@ -64,9 +64,11 @@ class TaskController extends Controller
     public function show($task_id){
         $details = Task::find($task_id);
         $str = $details->assign_to;
-        $assigne = explode(",",$str);        
-        $chats = Chat::select('message', 'user_id')->where('task_id', $task_id)->get();
-        return view('tasks.showtask', ['task_details'=>$details, 'chats'=>$chats, 'assigne'=>$assigne]);
+        $assigne = explode(",",$str);  
+        $user_id = $details->user_id;
+        $user_name = User::select('name')->where('id', $user_id)->get();      
+        $chats = Chat::select('message', 'user_id', 'user_name', 'created_at')->where('task_id', $task_id)->get();
+        return view('tasks.showtask', ['task_details'=>$details, 'chats'=>$chats, 'assigne'=>$assigne, 'user_name'=>$user_name]);
     }
 
     public function edit($task_id){

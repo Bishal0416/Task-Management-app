@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/task/update/{task_id}', [TaskController::class, 'update'])->name('task.update');
     Route::get('/task/delete/{task_id}', [TaskController::class, 'delete'])->name('task.delete');
     Route::get('/tasks/filter-search', [DashboardController::class, 'everyControll'])->name('task.filter-search');
+    Route::get('/own/tasks', [TaskController::class, 'owntask'])->name('own.task');
 
 });
 

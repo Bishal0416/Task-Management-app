@@ -23,7 +23,7 @@
                 <option value="User">User</option>
                 <option value="Admin">Admin</option>
             </select>
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <x-input-error :messages="$errors->get('role')" class="mt-2" />
         </div>
 
         <!-- Password -->

@@ -103,12 +103,12 @@
                             <!-- due date -->
                             <div class="relative max-w-sm sm:col-span-3">
                                 <label for="to" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select start date</label>
-                                <input type="date" name="due_data" id="to"
+                                <input type="date" name="due_date_start" id="to"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             </div>
                             <div class="sm:col-span-3 w-full">
                                 <label for="from" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select end date</label>
-                                <input type="date" name="due_data" id="from"
+                                <input type="date" name="due_date_end" id="from"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             </div>
                         </div>
@@ -131,9 +131,8 @@
                         <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">{{
                             $task->title }}</h5>
                     </div>
-                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Created by: {{ $task->user_id}}</p>
-                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Progress:{{ $task->status}}</p>
-                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">categories:{{ $task->catagory }}</p>
+                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Progress: {{ $task->status}}</p>
+                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">categories: {{ $task->catagory }}</p>
                     <a href="{{ route('task.show', ['task_id'=> $task->id]) }}"
                         class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         Read more
